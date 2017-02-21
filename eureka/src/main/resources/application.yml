@@ -1,6 +1,6 @@
 ---
 server:
-  port: 8081
+  port: 8761
 
 eureka:
   instance:
@@ -8,5 +8,6 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
+    healthcheck:
   server:
     enableSelfPreservation: false
