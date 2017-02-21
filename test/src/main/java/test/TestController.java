@@ -1,5 +1,10 @@
 package test;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,4 +56,22 @@ public class TestController {
             return "上传失败，因为文件是空的";
         }
     }
+    @RequestMapping(value = "/download",method = RequestMethod.GET)
+    public ResponseEntity<InputStreamResource> download(@RequestParam String file)throws Exception{
+        FileSystemResource fileResource = new FileSystemResource(file);
+        String fileName = new String(fileResource.getFilename().getBytes("UTF-8"),"iso-8859-1");
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentLength(fileResource.contentLength())
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(new InputStreamResource(fileResource.getInputStream()));
+    }
+
 }

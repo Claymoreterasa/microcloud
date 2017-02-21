@@ -5,9 +5,9 @@ server:
 spring:
   application:
     name: test
-#  cloud:
-#    config:
-#      enabled: false
+  cloud:
+    config:
+      enabled: false
   http:
     multipart:
       enabled: true

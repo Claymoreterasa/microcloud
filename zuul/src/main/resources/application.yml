@@ -15,6 +15,11 @@ zuul:
       path: /test/**
       stripPrefix: true
       serviceId: test
+    js_service:
+      path: /js_service/**
+      stripPrefix: true
+      serviceId: js_service
+#      url: http://192.168.0.238:3000/
   ignored-services: '*'
 
 eureka:
